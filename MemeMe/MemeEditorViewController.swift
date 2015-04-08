@@ -10,6 +10,8 @@ import UIKit
 
 class MemeEditorViewController: UIViewController, UINavigationControllerDelegate, UIImagePickerControllerDelegate, UITextFieldDelegate {
 
+    // MARK: - Outlets
+    
     @IBOutlet weak var shareButton: UIBarButtonItem!
     @IBOutlet weak var albumButton: UIBarButtonItem!
     @IBOutlet weak var cameraButton: UIBarButtonItem!
@@ -19,17 +21,21 @@ class MemeEditorViewController: UIViewController, UINavigationControllerDelegate
     @IBOutlet weak var bottomTextField: UITextField!
     @IBOutlet weak var imageView: UIImageView!
     
-    let topPlaceholder = "Top"
-    let bottomPlaceholder = "Bottom"
+    // MARK: - Vars
+    
+    let topPlaceholder = "TOP"
+    let bottomPlaceholder = "BOTTOM"
     let memeTextAttributes = [
-        NSStrokeColorAttributeName : UIColor.whiteColor(),
-        NSForegroundColorAttributeName : UIColor.blackColor(),
+        NSStrokeColorAttributeName : UIColor.blackColor(),
+        NSForegroundColorAttributeName : UIColor.whiteColor(),
         NSFontAttributeName : UIFont(name: "HelveticaNeue-CondensedBlack", size: 40)!,
-        NSStrokeWidthAttributeName : 10.0,
+        NSStrokeWidthAttributeName : -3.0,
+        
     ]
     
     var memedImage: UIImage?
     var topTextFieldTapped = false
+    var resetView = true
     
     // MARK: - Lifecyle
     
@@ -41,14 +47,18 @@ class MemeEditorViewController: UIViewController, UINavigationControllerDelegate
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
         
-        if (UIApplication.sharedApplication().delegate as AppDelegate).memes.count < 0 {
+        if (UIApplication.sharedApplication().delegate as AppDelegate).memes.count > 0 {
             self.showTableView()
         }
         
         self.cameraButton.enabled = UIImagePickerController.isSourceTypeAvailable(.Camera)
         self.subscribeToKeyboardNotification()
         self.shareButton.enabled = false
-        self.initView()
+        if resetView {
+            self.initView()
+            // Flip reset view to false
+            self.resetView = false
+        }
     }
     
     override func viewWillDisappear(animated: Bool) {
@@ -63,20 +73,20 @@ class MemeEditorViewController: UIViewController, UINavigationControllerDelegate
     // MARK: - Actions
     
     @IBAction func shareTapped(sender: UIBarButtonItem) {
-        println("shareTapped")
         self.memedImage = self.generateMemedImage()
         let controller = UIActivityViewController(activityItems: [self.memedImage!], applicationActivities: nil)
         self.presentViewController(controller, animated: true) { () -> Void in
             
         }
         controller.completionWithItemsHandler = save
-
     }
     
     @IBAction func cancelTapped(sender: UIBarButtonItem) {
-        // TODO
-        // Reset View
-        self.showTableView()
+        self.initView()
+        
+        if (UIApplication.sharedApplication().delegate as AppDelegate).memes.count < 0 {
+            self.showTableView()
+        }
     }
     
     @IBAction func cameraTapped(sender: UIBarButtonItem) {
@@ -123,6 +133,7 @@ class MemeEditorViewController: UIViewController, UINavigationControllerDelegate
         
         self.dismissViewControllerAnimated(true, completion: { () -> Void in
             self.shareButton.enabled = true
+            self.resetView = false
         })
     }
     
@@ -167,19 +178,22 @@ class MemeEditorViewController: UIViewController, UINavigationControllerDelegate
     // MARK: - Memed Image helpers
     
     ///
-    /// Initializes the view
+    /// Initializes the view to the default state.
     ///
     func initView(){
         self.topTextField.delegate = self
         self.topTextField.defaultTextAttributes = memeTextAttributes
         self.topTextField.textAlignment = .Center
         self.topTextField.text = topPlaceholder
+        self.topTextField.autocapitalizationType = .AllCharacters
         
         self.bottomTextField.delegate = self
         self.bottomTextField.defaultTextAttributes = memeTextAttributes
         self.bottomTextField.textAlignment = .Center
         self.bottomTextField.text = bottomPlaceholder
-//        self.imageView.image = nil
+        self.bottomTextField.autocapitalizationType = .AllCharacters
+        self.imageView.image = nil
+        self.shareButton.enabled = false
     }
     
     
@@ -212,7 +226,7 @@ class MemeEditorViewController: UIViewController, UINavigationControllerDelegate
         if completed {
             var meme = Meme(bottomText: self.bottomTextField.text, topText: self.topTextField.text, image: self.imageView.image!, memedImage: self.memedImage!)
             (UIApplication.sharedApplication().delegate as AppDelegate).memes.append(meme)
-            println("Saved in completed")
+            
         }
     }
 

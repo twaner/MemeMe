@@ -63,7 +63,7 @@
                                 <rect key="frame" x="0.0" y="88" width="375" height="30"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="allCharacters"/>
                             </textField>
                         </subviews>
                         <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
@@ -129,7 +129,7 @@
                             <navigationBar contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Jel-Dg-T2A">
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                                 <items>
-                                    <navigationItem title="Title" id="A4a-i7-89e"/>
+                                    <navigationItem title="Meme" id="A4a-i7-89e"/>
                                 </items>
                             </navigationBar>
                         </subviews>
@@ -142,7 +142,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="bSD-8k-iZJ" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1794.5" y="1402.5"/>
+            <point key="canvasLocation" x="1098.5" y="1391.5"/>
         </scene>
         <!--Tab Bar Controller-->
         <scene sceneID="Rt9-uS-YCH">
@@ -167,7 +167,7 @@
             </objects>
             <point key="canvasLocation" x="-409.5" y="1228.5"/>
         </scene>
-        <!--Meme Table View Controller-->
+        <!--Sent Memes-->
         <scene sceneID="NRY-OS-OiJ">
             <objects>
                 <tableViewController id="yd9-oi-5jq" customClass="MemeTableViewController" customModule="MemeMe" customModuleProvider="target" sceneMemberID="viewController">
@@ -189,7 +189,7 @@
                         </connections>
                     </tableView>
                     <toolbarItems/>
-                    <navigationItem key="navigationItem" id="e1r-GK-0AS">
+                    <navigationItem key="navigationItem" title="Sent Memes" id="e1r-GK-0AS">
                         <barButtonItem key="rightBarButtonItem" title="Item" systemItem="add" id="Rp7-z7-PZs">
                             <connections>
                                 <action selector="addTapped:" destination="yd9-oi-5jq" id="HV4-yQ-tlv"/>
@@ -206,15 +206,16 @@
             </objects>
             <point key="canvasLocation" x="653.5" y="1171.5"/>
         </scene>
-        <!--Meme Collection View Controller-->
+        <!--Sent Memes-->
         <scene sceneID="gmF-lb-WuW">
             <objects>
                 <collectionViewController id="KnU-xq-Vc6" customClass="MemeCollectionViewController" customModule="MemeMe" customModuleProvider="target" sceneMemberID="viewController">
                     <collectionView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" id="1B4-8w-e2T">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                         <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="vIh-Sw-vTx">
-                            <size key="itemSize" width="100" height="99"/>
+                            <size key="itemSize" width="120" height="119"/>
                             <size key="headerReferenceSize" width="0.0" height="0.0"/>
                             <size key="footerReferenceSize" width="0.0" height="0.0"/>
                             <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
@@ -224,17 +225,25 @@
                                 <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
-                                    <rect key="frame" x="0.0" y="0.0" width="100" height="99"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="120" height="119"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="B5A-hA-3VW">
-                                            <rect key="frame" x="0.0" y="0.0" width="100" height="99"/>
+                                            <rect key="frame" x="8" y="8" width="104" height="103"/>
                                         </imageView>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vln-lB-DA3">
+                                            <rect key="frame" x="39" y="-5" width="42" height="21"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                            <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
                                     </subviews>
                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 </view>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <connections>
-                                    <outlet property="imageView" destination="B5A-hA-3VW" id="8KR-PK-wwK"/>
+                                    <outlet property="imageView" destination="B5A-hA-3VW" id="T5w-Ed-lyQ"/>
+                                    <outlet property="testLbl" destination="vln-lB-DA3" id="afy-ai-BOU"/>
                                 </connections>
                             </collectionViewCell>
                         </cells>
@@ -243,7 +252,7 @@
                             <outlet property="delegate" destination="KnU-xq-Vc6" id="8py-Hz-fw0"/>
                         </connections>
                     </collectionView>
-                    <navigationItem key="navigationItem" id="rUz-3j-aFH">
+                    <navigationItem key="navigationItem" title="Sent Memes" id="rUz-3j-aFH">
                         <barButtonItem key="rightBarButtonItem" systemItem="add" id="CTc-Pz-k57">
                             <connections>
                                 <action selector="addTapped:" destination="KnU-xq-Vc6" id="ttF-5d-LIe"/>
@@ -251,6 +260,9 @@
                         </barButtonItem>
                     </navigationItem>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
+                    <connections>
+                        <segue destination="DG5-v0-jr1" kind="show" identifier="CollectionSegue" id="S5y-M6-hdI"/>
+                    </connections>
                 </collectionViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="HaO-qp-Zaj" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -299,4 +311,7 @@
         <image name="collection_30x30" width="30" height="30"/>
         <image name="table_30x30" width="30" height="30"/>
     </resources>
+    <inferredMetricsTieBreakers>
+        <segue reference="S5y-M6-hdI"/>
+    </inferredMetricsTieBreakers>
 </document>
