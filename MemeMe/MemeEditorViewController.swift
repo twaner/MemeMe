@@ -90,16 +90,21 @@ class MemeEditorViewController: UIViewController, UINavigationControllerDelegate
     }
     
     @IBAction func cameraTapped(sender: UIBarButtonItem) {
-        let imagePicker = UIImagePickerController()
-        imagePicker.delegate = self
-        imagePicker.sourceType = .Camera
-        self.presentViewController(imagePicker, animated: true, completion: nil)
+        self.getImage(.Camera)
     }
     
     @IBAction func albumTapped(sender: UIBarButtonItem) {
+        self.getImage(.PhotoLibrary)
+    }
+    
+    ///
+    /// Gets an image from the source passed into the method.
+    ///
+    ///:param: source Source that image can be selected from
+    func getImage(source: UIImagePickerControllerSourceType) {
         let imagePicker = UIImagePickerController()
         imagePicker.delegate = self
-        imagePicker.sourceType = .PhotoLibrary
+        imagePicker.sourceType = source
         self.presentViewController(imagePicker, animated: true, completion: nil)
     }
     
@@ -117,6 +122,7 @@ class MemeEditorViewController: UIViewController, UINavigationControllerDelegate
         textField.resignFirstResponder()
         return true
     }
+    
     
     // MARK: - UIImagePickerControllerDelegate Methods
     
@@ -153,6 +159,10 @@ class MemeEditorViewController: UIViewController, UINavigationControllerDelegate
     Helper methods for subscriptions
     */
     
+    ///
+    ///Determines if the view's frame should move up when the keyboard is tapped.
+    ///
+    ///:param: notification Notification taht the keyboard will appear.
     func keyboardWillShow(notification: NSNotification) {
         if !topTextFieldTapped {
             self.view.frame.origin.y -= getKeyboardHeight(notification)
