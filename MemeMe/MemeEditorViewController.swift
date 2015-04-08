@@ -41,15 +41,15 @@ class MemeEditorViewController: UIViewController, UINavigationControllerDelegate
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        if (UIApplication.sharedApplication().delegate as AppDelegate).memes.count > 0 {
+            self.showTableView()
+        }
 
     }
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
-        
-        if (UIApplication.sharedApplication().delegate as AppDelegate).memes.count > 0 {
-            self.showTableView()
-        }
         
         self.cameraButton.enabled = UIImagePickerController.isSourceTypeAvailable(.Camera)
         self.subscribeToKeyboardNotification()
@@ -84,7 +84,7 @@ class MemeEditorViewController: UIViewController, UINavigationControllerDelegate
     @IBAction func cancelTapped(sender: UIBarButtonItem) {
         self.initView()
         
-        if (UIApplication.sharedApplication().delegate as AppDelegate).memes.count < 0 {
+        if (UIApplication.sharedApplication().delegate as AppDelegate).memes.count > 0 {
             self.showTableView()
         }
     }
@@ -123,6 +123,15 @@ class MemeEditorViewController: UIViewController, UINavigationControllerDelegate
         return true
     }
     
+    func textField(textField: UITextField, shouldChangeCharactersInRange range: NSRange, replacementString string: String) -> Bool {
+        var beginning: UITextPosition = textField.beginningOfDocument
+        var start: UITextPosition =  textField.positionFromPosition(beginning, inDirection: .Right, offset: range.location)!
+        var end: UITextPosition = textField.positionFromPosition(start, offset: range.length)!
+        var textRange: UITextRange = textField.textRangeFromPosition(start, toPosition: end)!
+        
+        textField.replaceRange(textRange, withText: string.uppercaseString)
+        return false
+    }
     
     // MARK: - UIImagePickerControllerDelegate Methods
     
@@ -236,7 +245,7 @@ class MemeEditorViewController: UIViewController, UINavigationControllerDelegate
         if completed {
             var meme = Meme(bottomText: self.bottomTextField.text, topText: self.topTextField.text, image: self.imageView.image!, memedImage: self.memedImage!)
             (UIApplication.sharedApplication().delegate as AppDelegate).memes.append(meme)
-            
+            self.showTableView()
         }
     }
 

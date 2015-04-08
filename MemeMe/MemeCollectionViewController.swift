@@ -17,15 +17,16 @@ class MemeCollectionViewController: UICollectionViewController, UICollectionView
     
     override func viewDidLoad() {
         super.viewDidLoad()
-    }
-    
-    override func viewWillAppear(animated: Bool) {
-        super.viewWillAppear(animated)
         self.memes = (UIApplication.sharedApplication().delegate as AppDelegate).memes
         if self.memes.count > 0 {
             self.collectionView?.reloadData()
         }
+
     }
+    
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+            }
     
     @IBAction func addTapped(sender: UIBarButtonItem) {
         self.dismissViewControllerAnimated(true, completion: nil)
